@@ -1,0 +1,13 @@
+tests:
+    test_1:
+        parameters:
+            auth_cookie_name: ""
+            user_id: ""
+            cost_center_id: ""
+            organization_id: ""
+            auth_cookie_value: ""
+            account_auth_cookie_name: ""
+            account_auth_cookie_value: ""
+            price_table_id: ""
+
+

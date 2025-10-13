@@ -1,0 +1,8 @@
+tests:
+    test_1:
+        credentials:
+            BASE_URL: "https://weni.vtexcommercestable.com.br"
+        parameters:
+            email: "leonardo.amaral@vtex.com"
+
+

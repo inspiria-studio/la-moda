@@ -1,0 +1,7 @@
+tests:
+    test_1:
+        parameters:
+            orderform_id: "517cf8cf7e2c4aba8466a3d9340cbbe4"
+        credentials:
+            STORE_URL: ""
+            BASE_URL: ""

@@ -1,0 +1,9 @@
+tests:
+    test_1:
+        parameters:
+            product_items: [{product_retailer_id=797, quantity=1, item_price=9.0, currency=BRL}, {product_retailer_id=922, quantity=1, item_price=903.6, currency=BRL}]
+            vtex_session: "eyJhbGciOiJFUzI1NiIsImtpZCI6IjEzYTg3ZDJlLTdmZDMtNGI4MC04ZTk5LTBlNjFkMjE0ZWJjOSIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50LmlkIjpbXSwiaWQiOiI4YmQ0ODJmZC0zY2E4LTQ3NzctYjdkMi1hNWMzZDhmMDVhNzgiLCJ2ZXJzaW9uIjoyLCJzdWIiOiJzZXNzaW9uIiwiYWNjb3VudCI6InNlc3Npb24iLCJleHAiOjE3NTY1NTc0MTgsImlhdCI6MTc1NTg2NjIxOCwianRpIjoiMDc2ODc2YmItZjY2Yy00NGE4LTliNTctZGYzOGU3ZjgwODYzIiwiaXNzIjoic2Vzc2lvbi9kYXRhLXNpZ25lciJ9.4Drv0CS3kqv1WiCVk7BwtokJ_O7Pjpaok3IisFgu7U4HzQlTaCeyVas7hC6MXmpe3lRD-r6gAlcnAHjsvdkgvQ"
+            vtex_segment: "eyJjYW1wYWlnbnMiOm51bGwsImNoYW5uZWwiOiIxIiwicHJpY2VUYWJsZXMiOiJwYW1wbG9uYS1maWRlbGlkYWRlIiwicmVnaW9uSWQiOm51bGwsInV0bV9jYW1wYWlnbiI6bnVsbCwidXRtX3NvdXJjZSI6bnVsbCwidXRtaV9jYW1wYWlnbiI6bnVsbCwiY3VycmVuY3lDb2RlIjoiQlJMIiwiY3VycmVuY3lTeW1ib2wiOiJSJCIsImNvdW50cnlDb2RlIjoiQlJBIiwiY3VsdHVyZUluZm8iOiJwdC1CUiIsImFkbWluX2N1bHR1cmVJbmZvIjoicHQtQlIiLCJjaGFubmVsUHJpdmFjeSI6InB1YmxpYyIsImZhY2V0cyI6ImFjY2Vzc2NvbnRyb2xsaXN0PWJlZmVjZmE0LWRiMTYtMTFlZS04NDUyLTBhZmZjMWMyZDZlOTsifQ"
+        credentials:
+            STORE_URL: "pamplonase.myvtex.com"
+            BASE_URL: "pamplonase.myvtex.com"

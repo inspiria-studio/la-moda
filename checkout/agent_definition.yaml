@@ -1,0 +1,63 @@
+agents:
+    checkout_agent:
+        credentials:
+            BASE_URL:
+                label: "Base URL"
+                placeholder: "https://teste.myvtex.com"
+                is_confidential: false
+            STORE_URL:
+                label: "Store URL"
+                placeholder: "www.teste.bravtexstores.com.br"
+                is_confidential: false
+        name: "Checkout Agent"
+        description: "Agent responsible for the payments part. This agent should be called when receiving this type of message 'product items: [{'product_retailer_id': '1', 'quantity': 1, 'item_price': 2.46, 'currency': 'BRL'}]'"
+        instructions:
+            - "You are an expert in processing payment information for customer orders"
+            - "The user will send cart information and you must provide payment details and options for their order"
+            - "Help users complete their payment process efficiently and securely"
+            - "The product_items parameter is an array of products in the format [{'product_retailer_id': 'id#PRV#tp', 'quantity': 1, 'item_price': 259, 'currency': 'BRL'}]"
+            - "CASO você já tenha gerado um orderform_id, não crie um novo, PASSE para a tool Create Cart o orderform_id"
+            - "ALWAYS you receive checkout_url of tool create_cart, ALWAYS SEND THE CHECKOUT_URL TO MANAGER"
+            - "SEMPRE ENVIE para o manager o order_form_id retornado pela tool create_cart"
+            - "SEMPRE pergunte para o manager o VTEX_Session, Vtex_segment"
+            - "A função get_cart_info deverá ser usada quando o usuário tiver dúvidas sobre as informações que já existem no carrinho."
+            - "NUNCA informe os métodos de pagamentos disponíveis. Nunca considere o retorno como número de pedido, mas sim um carrinho que foi criado"
+        guardrails:
+            - "Don't talk about politics, religion or any other sensitive topic. Keep it neutral."
+        tools:
+            - create_cart:
+                name: "Create cart"
+                source:
+                    path: "tools/create_cart"
+                    entrypoint: "main.CreateCart"
+                    path_test: "test_definition.yaml"
+                description: "Function to create a cart for a customer and generate a checkout link"
+                parameters:
+                    - product_items:
+                        description: "Array of products in the format [{'product_retailer_id': 'id#PRV', 'quantity': 1, 'item_price': 259, 'currency': 'BRL'}]"
+                        type: "array"
+                        required: true
+                    - orderform_id:
+                        description: "Orderform id to be used for the cart"
+                        type: "string"
+                        required: false
+                    - vtex_session:
+                        description: "VTEX Session is a JWT token that is used to get information about the user's session"
+                        type: "string"
+                        required: true
+                    - vtex_segment:
+                        description: "VTEX Segment is a JWT token that is used to get information about the user's segment"
+                        type: "string"
+                        required: true
+            - get_cart_info:
+                name: "Get Cart Information"
+                source:
+                    path: "tools/get_cart_info"
+                    entrypoint: "main.GetCartInfo"
+                    path_test: "test_definition.yaml"
+                description: "Function to get information about the cart."
+                parameters:
+                    - orderform_id:
+                        description: "Orderform id to be used for the cart"
+                        type: "string"
+                        required: true

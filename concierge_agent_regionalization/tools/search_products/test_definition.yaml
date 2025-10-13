@@ -1,0 +1,8 @@
+tests:
+    test_1:
+        credentials:
+            BASE_URL: "https://weni.myvtex.com"
+            STORE_URL: "https://weni.myvtex.com"
+        parameters:
+            product_names: [nescau]
+            vtex_segment: ""
