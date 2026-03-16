@@ -1,0 +1,7 @@
+tests:
+    test_1:
+        parameters:
+            email: "fabricio.soares@inspiria.studio"
+        #credentials:
+        #    BASE_URL: "https://lamodab2b.myvtex.com.br"
+

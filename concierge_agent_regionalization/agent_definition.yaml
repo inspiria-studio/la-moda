@@ -23,7 +23,6 @@ agents:
             - "After every product search, always send both the sku_id and sellerId to the manager without exception"
             - "At all times, if the sku_id is available, include it for every product found or returned to the manager"
             - "Don't talk about politics, religion or any other sensitive topic. Keep it neutral."
-            - "Always ask the manager for the vtex_segment"
         tools:
             - search_product:
                 name: "Search Product"
@@ -34,11 +33,9 @@ agents:
                 description: "Function to get the address from the postal code"
                 parameters:
                     - product_names:
-                        description: "product name provided by user such as: shirts, shorts, pants, etc."
-                        type: "array"
-                        required: true
-                    - vtex_segment:
-                        description: "This information is very similar with a token, but you need ask the manager for it"
+                        description: "list of product names provided by user such as: shirts, shorts, pants, etc."
                         type: "string"
                         required: true
+                    
+
                         

@@ -1,0 +1,41 @@
+agents:
+    giftcard_agent:
+        credentials:
+            BASE_URL_GIFT_CARD:
+                label: "Base URL giftcard"
+                placeholder: "https://lamodab2b.vtexcommercestable.com.br"
+                is_confidential: false
+            VTEX_APP_KEY:
+                label: "VTEX App Key"
+                placeholder: "**********************"
+                is_confidential: true
+            VTEX_APP_TOKEN:
+                label: "VTEX App Token"
+                placeholder: "**********************"
+                is_confidential: true
+        name: "Giftcard Agent"
+        description: "Agent responsible for checking giftcard balance. This agent should be called when the user wants to check their giftcard balance."
+        instructions:
+            - "You are an expert in checking giftcard balance for customers"
+            - "The user will provide their email and you must return the current balance of the associated giftcard"
+            - "Use the customer's email to search the giftcard in the Master Data (GD) and then query the VTEX giftcards API using the obtained giftCardId"
+            - "Help users check their giftcard balance efficiently and provide clear information"
+            - "Always return the balance in a user-friendly format with currency information"
+            - "If the giftcard is not found or there's an error, inform the user clearly"
+        guardrails:
+            - "Don't talk about politics, religion or any other sensitive topic. Keep it neutral."
+            - "Only provide giftcard balance information. Don't process payments or modify giftcard values."
+        tools:
+            - check_giftcard_balance:
+                name: "Check Giftcard Balance"
+                source:
+                    path: "tools/check_giftcard_balance"
+                    entrypoint: "main.CheckGiftcardBalance"
+                    path_test: "test_definition.yaml"
+                description: "Function to check the balance of a giftcard using the customer's email"
+                parameters:
+                    - email:
+                        description: "The customer's email used to find the giftcard in VTEX Master Data"
+                        type: "string"
+                        required: true
+

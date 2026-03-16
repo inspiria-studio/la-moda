@@ -1,8 +1,9 @@
 tests:
     test_1:
         credentials:
-            BASE_URL: "https://weni.myvtex.com"
-            STORE_URL: "https://weni.myvtex.com"
+            BASE_URL: "https://lamodab2b.myvtex.com"
+            STORE_URL: "https://vendamais.lamoda.com.br"
         parameters:
-            product_names: [nescau]
-            vtex_segment: ""
+            product_names: "toalhas"
+            postal_code: "70040010"
+    

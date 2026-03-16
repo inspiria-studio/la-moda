@@ -1,8 +1,0 @@
-tests:
-    test_1:
-        parameters:
-            user_token: "598170"
-            email: "leonardo.amaral+weni@vtex.com"
-            auth_token: "66FA1C97B0543C15F37959DAF75E46A89A895598BCC66A1123F51D6288049E23"
-
-

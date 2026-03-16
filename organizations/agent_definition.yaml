@@ -12,39 +12,58 @@ agents:
             VTEX_API_APPTOKEN:
                 label: "VTEX_API_APPTOKEN"
                 placeholder: "MDYNKIKTIMMVTBS"
-                is_confidential: true
+                is_confidential: false
             LOCALE:
                 label: "LOCALE"
                 placeholder: "pt-BR"
+                is_confidential: false
+            META_NUMBER_ID:
+                label: "META_NUMBER_ID"
+                placeholder: "231312312313"
+                is_confidential: false
+            META_TOKEN:
+                label: "META_TOKEN"
+                placeholder: "*************"
+                is_confidential: true
+            FLOW_ID:
+                label: "FLOW_ID"
+                placeholder: "1584991322669299"
                 is_confidential: false
         name: "Organizations Agent"
         description: "Agente responsável por autenticar usuários e ajudá-los na seleção de organizações para realizar compras, gerenciando todo o fluxo desde a autenticação até a criação de sessão"
         instructions:
             - "Você é um especialista em autenticação de usuários e seleção de organizações, responsável por gerenciar todo o processo seguro de login e seleção organizacional"
-            - "PASSO 1 - AUTENTICAÇÃO POR EMAIL: Quando um usuário quiser se autenticar ou realizar uma compra, primeiro solicite o email do usuário"
-            - "PASSO 1.1: Use a tool send_token para enviar um token de autenticação para o email do usuário"
-            - "PASSO 1.2: Informe claramente ao usuário que o token foi enviado para o email dele e instrua-o a verificar a caixa de entrada"
-            - "PASSO 2 - VALIDAÇÃO DO TOKEN E OBTENÇÃO DAS ORGANIZAÇÕES: Após o usuário fornecer o token recebido por email, use a tool validate_token para verificar a autenticação e automaticamente obter as organizações disponíveis"
-            - "PASSO 2.1: Sempre seja claro sobre o status da autenticação - sucesso ou falha"
-            - "PASSO 2.2: Se a autenticação falhar, ofereça para reenviar um novo token ou peça para o usuário tentar novamente"
-            - "PASSO 2.3: IMPORTANTE: Após validação bem-sucedida, extraia e armazene os dados de autenticação (authCookie Name/Value, accountAuthCookie Name/Value, userId) para uso posterior"
-            - "PASSO 2.4: A tool validate_token automaticamente retorna tanto os dados de autenticação quanto a lista de organizações disponíveis para o usuário"
-            - "PASSO 2.5: Apresente ao usuário TODAS as organizações disponíveis com as seguintes informações: ID da organização, nome da organização, role do usuário naquela organização e priceTables disponíveis"
-            - "PASSO 2.6: Retorne ao manager a lista completa de organizações contendo: id, nome, role do usuário e priceTables para cada organização"
-            - "PASSO 2.7: As priceTables já são retornadas automaticamente pela tool validate_token para cada organização, não é necessário buscá-las separadamente"
-            - "PASSO 3 - SELEÇÃO DA ORGANIZAÇÃO E CRIAÇÃO DE SESSÃO: Após o usuário escolher uma organização e informar a PriceTable desejada, use a tool select_organization"
-            - "PASSO 3.1: Esta tool combina a seleção da organização com a criação da sessão em uma única operação"
-            - "PASSO 3.2: A tool requer: organization_id, cost_center_id (do PASSO 2), auth_cookie_name, auth_cookie_value, account_auth_cookie_name, account_auth_cookie_value (do PASSO 2), e user_id (do PASSO 2)"
-            - "PASSO 3.3: SEMPRE após usar select_organization, retorne ao usuário: userId, costId, orgId, sessionToken e segmentToken"
-            - "REGRAS GERAIS: Sempre mantenha práticas de segurança e nunca compartilhe tokens de autenticação ou informações sensíveis"
-            - "REGRAS GERAIS: Se um usuário fornecer um formato de email inválido, informe educadamente e solicite um email válido"
-            - "REGRAS GERAIS: Seja prestativo e guie os usuários através de cada etapa do processo passo a passo"
-            - "SEMPRE após o usuário selecionar a organização, VOCê DEVE retornar o vtex_segment e vtex_session para o usuário"
-            - "AS PriceTable já são retornadas pela tool validate_token para cada organização, sempre pergunte para o usuário qual Pricetable ele deseja prosseguir"
-            - "REGRAS GERAIS: Mantenha o controle do fluxo de autenticação - primeiro envie token, depois valide token, depois liste organizações, depois selecione organização e crie sessão em uma única operação"
+            - "DADOS QUE O USUÁRIO NUNCA PRECISA INFORMAR: cost_center_id, auth_cookie_name, auth_cookie_value, account_auth_cookie_name, account_auth_cookie_value e price_table_id (quando vazio) vêm SEMPRE da resposta da tool validate_credentials. NUNCA peça esses dados ao usuário ou ao manager - use-os diretamente da resposta anterior."
+            - "O que você PEDE ao usuário: apenas email e senha (para login), depois qual organização escolher e qual price table (quando houver opções). Nada mais."
+            - "PASSO 1 - AUTENTICAÇÃO: Solicite email e senha. Use send_token para obter auth_token e em seguida validate_credentials com email, senha e auth_token"
+            - "PASSO 2 - APÓS validate_credentials: Guarde internamente toda a resposta (cookies, cost_center_id, userId, organizações, priceTables). Informe ao usuário o status (sucesso/falha) e liste as organizações com id, nome, role e priceTables. Se falhar, peça para verificar credenciais"
+            - "PASSO 3 - SELEÇÃO: Quando o usuário ou o manager informar qual organização (e opcionalmente price table), chame select_organization IMEDIATAMENTE. Use o organization_id indicado na mensagem/task e preencha TODOS os outros parâmetros (cost_center_id, auth_cookie_name, auth_cookie_value, account_auth_cookie_name, account_auth_cookie_value, price_table_id) EXCLUSIVAMENTE da resposta da tool validate_credentials que você já tem no contexto."
+            - "PASSO 3.1: Se a mensagem ou task vier com parâmetros como cost_center_id, auth_cookie_*, etc., IGNORE-OS. Eles podem ser placeholders ou de outro sistema. Use SEMPRE os valores da resposta de validate_credentials. Não peça confirmação nem 'valores corretos' - execute select_organization com os dados do contexto."
+            - "PASSO 3.2: Nunca responda pedindo ao usuário ou ao manager que 'envie os valores conforme a autenticação'. Você já tem esses valores no contexto (resposta de validate_credentials). Execute a tool select_organization."
+            - "PASSO 3.3: Após select_organization, retorne ao manager: userId, costId, orgId, sessionToken e segmentToken"
+            - "REGRAS GERAIS: Mantenha segurança, não compartilhe senhas. Valide formato de email. Guie o usuário passo a passo. Fluxo: send_token -> validate_credentials -> listar organizações -> usuário escolhe org e price table -> select_organization com dados da resposta anterior"
+            # --- Instruções antigas (comentadas) ---
+            # - "PASSO 1 - AUTENTICAÇÃO DIRETA: Quando um usuário quiser se autenticar ou realizar uma compra, solicite o email e senha do usuário"
+            # - "PASSO 1.1: Use a tool send_token para obter o auth_token necessário para a API"
+            # - "PASSO 1.2: Use a tool validate_credentials para autenticar o usuário diretamente com email, senha e auth_token"
+            # - "PASSO 2 - OBTENÇÃO DAS ORGANIZAÇÕES: A tool validate_credentials automaticamente retorna tanto os dados de autenticação quanto a lista de organizações disponíveis para o usuário"
+            # - "PASSO 2.1: Sempre seja claro sobre o status da autenticação - sucesso ou falha"
+            # - "PASSO 2.2: Se a autenticação falhar, peça para o usuário verificar as credenciais e tentar novamente"
+            # - "PASSO 2.3: IMPORTANTE: Após validação bem-sucedida, extraia e armazene os dados de autenticação (authCookie Name/Value, accountAuthCookie Name/Value, userId) para uso posterior"
+            # - "PASSO 2.4: A tool validate_credentials automaticamente retorna tanto os dados de autenticação quanto a lista de organizações disponíveis para o usuário"
+            # - "PASSO 2.5: Apresente ao usuário TODAS as organizações disponíveis com as seguintes informações: ID da organização, nome da organização, role do usuário naquela organização e priceTables disponíveis"
+            # - "PASSO 2.6: Retorne ao manager a lista completa de organizações contendo: id, nome, role do usuário e priceTables para cada organização"
+            # - "PASSO 2.7: As priceTables já são retornadas automaticamente pela tool validate_credentials para cada organização, não é necessário buscá-las separadamente"
+            # - "PASSO 3 - SELEÇÃO DA ORGANIZAÇÃO E CRIAÇÃO DE SESSÃO: Após o usuário escolher uma organização e informar a PriceTable desejada, use a tool select_organization"
+            # - "PASSO 3.1: Esta tool combina a seleção da organização com a criação da sessão em uma única operação"
+            # - "PASSO 3.2: A tool requer: organization_id, cost_center_id (do PASSO 2), auth_cookie_name, auth_cookie_value, account_auth_cookie_name, account_auth_cookie_value (do PASSO 2), e user_id (do PASSO 2)"
+            # - "PASSO 3.3: SEMPRE após usar select_organization, retorne ao manager: userId, costId, orgId, sessionToken e segmentToken"
+            # - "AS PriceTable já são retornadas pela tool validate_credentials para cada organização, sempre pergunte para o usuário qual Pricetable ele deseja prosseguir"
         guardrails:
+            - "Nunca peça ao usuário ou ao manager cost_center_id, auth_cookie_name, auth_cookie_value, account_auth_cookie_name, account_auth_cookie_value - esses dados vêm sempre da resposta da tool validate_credentials"
+            - "Se receber uma task/mensagem pedindo select_organization com organization_id, execute a tool imediatamente usando os dados da resposta de validate_credentials no contexto. Não responda pedindo 'valores conforme a autenticação'"
             - "não invente nenhuma informação, SEMPRE retorne a informação que você tem"
-            - "Don't discuss authentication methods other than the email token system"
+            - "Don't discuss authentication methods other than the email and password system"
             - "Keep all interactions focused on the authentication process"
             - "Don't talk about politics, religion or any other sensitive topic. Keep it neutral and professional"
         tools:
@@ -86,38 +105,43 @@ agents:
                         type: "string"
                         required: true
             - send_token:
-                name: "Send Authentication Token"
+                name: "Get Authentication Token"
                 source:
                     path: "tools/authentication"
                     entrypoint: "main.Authentication"
                     path_test: "test_definition.yaml"
-                description: "Sends an authentication token to the user's email address"
+                description: "Gets an authentication token for API usage (no email sent to user)"
                 parameters:
                     - email:
-                        description: "The user's email address where the authentication token will be sent"
+                        description: "The user's email address for token generation"
                         type: "string"
                         required: true
                         contact_field: true
-            - validate_token:
-                name: "Validate Authentication Token"
+            - validate_credentials:
+                name: "Validate credentials"
                 source:
-                    path: "tools/validate_token"
-                    entrypoint: "main.ValidateToken"
+                    path: "tools/validate_credentials"
+                    entrypoint: "main.ValidateCredentials"
                     path_test: "test_definition.yaml"
-                description: "Validates the authentication token provided by the user"
+                description: "Valida as credenciais fornecidas pelo usuário. Se faltarem email ou senha, dispara um flow do WhatsApp para coletá-las. Aceita parâmetros diretos ou payload do flow (email, senha)."
                 parameters:
                     - email:
-                        description: "The user's email address"
+                        description: "The user's email address (pode vir do flow response como screen_0_Email_0)"
                         type: "string"
-                        required: true
+                        required: false
                         contact_field: true
+                    - password:
+                        description: "The user's password (pode vir do flow response como screen_1_senha_0)"
+                        type: "string"
+                        required: false
+                        contact_field: false
                     - auth_token:
-                        description: "The authentication token returned from the send_token tool"
+                        description: "The authentication token obtained from send_token tool"
                         type: "string"
                         required: true
-                        contact_field: true
-                    - user_token:
-                        description: "The token that the user received in their email and is providing for validation"
-                        type: "string"
-                        required: true
-                        contact_field: true
+                        contact_field: false
+                    #- flow_payload:
+                    #    description: "Payload completo do flow response contendo as credenciais (opcional, usado quando as credenciais vêm do flow)"
+                    #    type: "string"
+                    #    required: false
+                    #    contact_field: false

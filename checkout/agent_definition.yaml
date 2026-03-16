@@ -16,10 +16,10 @@ agents:
             - "The user will send cart information and you must provide payment details and options for their order"
             - "Help users complete their payment process efficiently and securely"
             - "The product_items parameter is an array of products in the format [{'product_retailer_id': 'id#PRV#tp', 'quantity': 1, 'item_price': 259, 'currency': 'BRL'}]"
+            - "VALOR MÍNIMO OBRIGATÓRIO: O carrinho só pode ser montado e o link de pagamento só pode ser gerado se o valor total dos itens for de no mínimo R$ 700,00 (setecentos reais). Se o valor for inferior, informe ao usuário que o pedido mínimo é R$ 700,00 e não chame a tool create_cart."
             - "CASO você já tenha gerado um orderform_id, não crie um novo, PASSE para a tool Create Cart o orderform_id"
             - "ALWAYS you receive checkout_url of tool create_cart, ALWAYS SEND THE CHECKOUT_URL TO MANAGER"
             - "SEMPRE ENVIE para o manager o order_form_id retornado pela tool create_cart"
-            - "SEMPRE pergunte para o manager o VTEX_Session, Vtex_segment"
             - "A função get_cart_info deverá ser usada quando o usuário tiver dúvidas sobre as informações que já existem no carrinho."
             - "NUNCA informe os métodos de pagamentos disponíveis. Nunca considere o retorno como número de pedido, mas sim um carrinho que foi criado"
         guardrails:
@@ -34,19 +34,7 @@ agents:
                 description: "Function to create a cart for a customer and generate a checkout link"
                 parameters:
                     - product_items:
-                        description: "Array of products in the format [{'product_retailer_id': 'id#PRV', 'quantity': 1, 'item_price': 259, 'currency': 'BRL'}]"
-                        type: "array"
-                        required: true
-                    - orderform_id:
-                        description: "Orderform id to be used for the cart"
-                        type: "string"
-                        required: false
-                    - vtex_session:
-                        description: "VTEX Session is a JWT token that is used to get information about the user's session"
-                        type: "string"
-                        required: true
-                    - vtex_segment:
-                        description: "VTEX Segment is a JWT token that is used to get information about the user's segment"
+                        description: "String with products in the format [{'product_retailer_id': 'id#PRV', 'quantity': 1, 'item_price': 259, 'currency': 'BRL'}] or JSON string"
                         type: "string"
                         required: true
             - get_cart_info:

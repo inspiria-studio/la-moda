@@ -1,0 +1,7 @@
+tests:
+    test_1:
+        parameters:
+            email: "fabricio.soares@inspiria.studio"
+            password: "senha123"
+            auth_token: "64E6FA9452E237DF7DA488D9619DAA23F775EB2B639DC99664F7364D97B3A46D"
+

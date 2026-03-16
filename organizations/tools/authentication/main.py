@@ -19,10 +19,10 @@ class Authentication(Tool):
             # First step: get authentication token
             auth_token = self.get_authentication_token(base_url, account_name, locale)
             
-            # Second step: send access key using the token
-            result = self.send_access_key(base_url, auth_token, email)
+            """ # Second step: send access key using the token
+            result = self.send_access_key(base_url, auth_token, email) """
             
-            return TextResponse(data={"result": result, "email": email, "auth_token": auth_token})
+            return TextResponse(data={"email": email, "auth_token": auth_token})
             
         except Exception as e:
             # Print error to console for debugging

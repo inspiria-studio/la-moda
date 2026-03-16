@@ -1,13 +1,15 @@
 tests:
     test_1:
         parameters:
-            auth_cookie_name: ""
-            user_id: ""
-            cost_center_id: ""
-            organization_id: ""
-            auth_cookie_value: ""
-            account_auth_cookie_name: ""
-            account_auth_cookie_value: ""
+            auth_cookie_name: "VtexIdclientAutCookie_lamodab2b"
+            user_id: "3d68960c-8d86-4f50-8515-50578072576b"
+            cost_center_id: "1f4db5e2-6cab-11f0-b37f-d1af8f42e283"
+            organization_id: "15730808-3657-4800-82d6-f68cecdc1c87"
+            auth_cookie_value: "eyJzdWIiOiJmYWJyaWNpby5zb2FyZXNAaW5zcGlyaWEuc3R1ZGlvIiwiYWNjb3VudCI6ImxhbW9kYWIyYiIsImF1ZGllbmNlIjoid2Vic3RvcmUiLCJzZXNzIjoiNjc3NThlMmEtNTE3Mi00OWIzLTg4ODUtYjY1ZGFlZTY1NWQzIiwiZXhwIjoxNzY2MjUxNDEyLCJ0eXBlIjoidXNlciIsInVzZXJJZCI6IjNkNjg5NjBjLThkODYtNGY1MC04NTE1LTUwNTc4MDcyNTc2YiIsImlhdCI6MTc2NjE2NTAxMiwiaXNSZXByZXNlbnRhdGl2ZSI6ZmFsc2UsImlzcyI6InRva2VuLWVtaXR0ZXIiLCJqdGkiOiIyNWZjN2ZiZC0wZmJjLTQ0YWYtODA1OS04YWYxZDRkOTc1YzEifQ"
+            account_auth_cookie_name: "VtexIdclientAutCookie_1976aacf-2501-407d-81e6-c53d8efced2b"
+            account_auth_cookie_value: "eyJhbGciOiJFUzI1NiIsImtpZCI6IkEzRkZEQTQwREFEOEE0OUEwOTI5RkRDODRFMjYxMkQxQzlGRjg3RjciLCJ0eXAiOiJqd3QifQ.eyJzdWIiOiJmYWJyaWNpby5zb2FyZXNAaW5zcGlyaWEuc3R1ZGlvIiwiYWNjb3VudCI6ImxhbW9kYWIyYiIsImF1ZGllbmNlIjoid2Vic3RvcmUiLCJzZXNzIjoiNjc3NThlMmEtNTE3Mi00OWIzLTg4ODUtYjY1ZGFlZTY1NWQzIiwiZXhwIjoxNzY2MjUxNDEyLCJ0eXBlIjoidXNlciIsInVzZXJJZCI6IjNkNjg5NjBjLThkODYtNGY1MC04NTE1LTUwNTc4MDcyNTc2YiIsImlhdCI6MTc2NjE2NTAxMiwiaXNSZXByZXNlbnRhdGl2ZSI6ZmFsc2UsImlzcyI6InRva2VuLWVtaXR0ZXIiLCJqdGkiOiIyNWZjN2ZiZC0wZmJjLTQ0YWYtODA1OS04YWYxZDRkOTc1YzEifQ.4rGHNFRiA9zLzvBnnhHX8lqurYBezgMiwqHeMhpFlknsiJcGEOFsK1GdsPOHamtdrACvxJ_J70qzML-6QHiJYg"
             price_table_id: ""
+        contact:
+            urn: "whatsapp:5585999854658"
 
 
